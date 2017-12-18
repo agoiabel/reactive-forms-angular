@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,28 @@ export class AppComponent implements OnInit {
   title = 'reactive forms';
   myGroup: FormGroup;
 
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.myGroup = new FormGroup({
-      'firstname': new FormControl(''),
-      'password': new FormControl('')
+    this.myGroup = this.formBuilder.group({
+      'firstname': this.formBuilder.control('', Validators.required),
+      'password': this.formBuilder.control('', Validators.required)
     });
+  }
+
+  get firstname() {
+    return this.myGroup.get('firstname');
+  }
+
+  get password() {
+    return this.myGroup.get('password');
+  }
+
+  /**
+   * Handle the form submission
+   */
+  handleSubmit() {
+    console.dir(this.myGroup);
   }
 
 }
