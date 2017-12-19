@@ -13,6 +13,7 @@
       <input type="text" formControlName="firstname" class="form-control">
       <div *ngIf="firstname.invalid && firstname.touched">
         <div *ngIf="firstname.errors.required">Firstname is required</div>
+        <div *ngIf="firstname.errors.cannotContainSpace">Firstname cannot contain space</div>
       </div>
     </div>
 
@@ -22,6 +23,17 @@
       <div *ngIf="password.invalid && password.touched">
         <div *ngIf="password.errors.required">Password is required</div>
       </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="label-control">Confirm Password:</label>
+      <input type="password" formControlName="passwordConfirmation" class="form-control">
+
+      <div *ngIf="passwordConfirmation.invalid && passwordConfirmation.touched">
+        <div *ngIf="passwordConfirmation.errors.required">Password is required</div>
+        <div *ngIf="passwordConfirmation.errors.matchPassword">Password does not match</div>
+      </div>
+
     </div>
 
     <button class="btn btn-primary">submit</button>

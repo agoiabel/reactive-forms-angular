@@ -1,5 +1,7 @@
+import { CannotContainSpaceValidators } from './cannotcontainspacevalidator';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { PasswordValidators } from "./PasswordValidators";
 
 @Component({
   selector: 'app-root',
@@ -14,8 +16,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.myGroup = this.formBuilder.group({
-      'firstname': this.formBuilder.control('', Validators.required),
-      'password': this.formBuilder.control('', Validators.required)
+      
+      'firstname': this.formBuilder.control('', [
+          Validators.required, 
+          CannotContainSpaceValidators.cannotContainSpace
+      ]),
+      'password': this.formBuilder.control('', Validators.required),
+
+      'passwordConfirmation': this.formBuilder.control('', [
+          Validators.required,
+          PasswordValidators.matchPassword
+      ])
+
     });
   }
 
@@ -25,6 +37,10 @@ export class AppComponent implements OnInit {
 
   get password() {
     return this.myGroup.get('password');
+  }
+
+  get passwordConfirmation() {
+    return this.myGroup.get('passwordConfirmation');
   }
 
   /**
